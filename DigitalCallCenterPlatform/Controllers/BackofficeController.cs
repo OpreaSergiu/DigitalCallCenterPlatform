@@ -21,12 +21,12 @@ namespace DigitalCallCenterPlatform.Controllers
             return View();
         }
 
-        public ActionResult Trust()
+        public ActionResult Trust() 
         {
             return View();
         }
 
-        public ActionResult PaymentPost()
+        public ActionResult PaymentRequest()
         {
             return View();
         }
