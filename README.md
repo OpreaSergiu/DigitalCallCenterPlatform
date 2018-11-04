@@ -20,3 +20,33 @@ An online platform for outsourcing the call center part of a company.
 9. WorkPlatformAccountViewModels (View Model for the WorkPlatform page)
 
 ```
+
+```markdown
+
+# Current Controllers
+
+1. AccountController
+2. HomeController
+3. ManageController
+
+**04-11-2018**
+
+4. WorkPlatformController (Controller that will handle any action performed on a specific customer account)
+
+```
+
+
+```markdown
+
+# Current Views
+
+1. Account
+2. Home
+3. Manage
+4. Shared
+
+**04-11-2018**
+
+5. WorkPlatform (Customer Account View)
+
+```
