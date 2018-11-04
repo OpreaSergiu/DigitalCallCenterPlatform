@@ -29,5 +29,11 @@ namespace DigitalCallCenterPlatform.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<WorkPlatformModels> WorkPlatformModels { get; set; }
+        public DbSet<PhoneModels> PhoneModels { get; set; }
+        public DbSet<NotesModels> NotesModels { get; set; }
+        public DbSet<InvoiceModels> InvoiceModels { get; set; }
+        public DbSet<AddressModels> AddressModels { get; set; }
     }
 }
