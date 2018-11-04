@@ -2,6 +2,8 @@
 
 An online platform for outsourcing the call center part of a company.
 
+Designed used ASP.NET MVC
+
 ```markdown
 
 # Current Models
