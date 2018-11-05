@@ -1,7 +1,54 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-}
+﻿@model DigitalCallCenterPlatform.Models.WorkPlatformAccountViewModels
 
-<h2>Test</h2>
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-5 text-left">
+            <br />
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><b>Account Number:</b> @Html.DisplayFor(model => model.Account.Id)</td>
+                        <td><b>Client Reference:</b> @Html.DisplayFor(model => model.Account.ClientReference)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Name:</b> @Html.DisplayFor(model => model.Account.Name)</td>
+                        <td><b>Client ID:</b> @Html.DisplayFor(model => model.Account.ClientID)</td>
+                    </tr>
+                </tbody>
+            </table>
 
+            <br />
+
+            <table class="table">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Desk:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.Desk)</td>
+                        <td><b>Assign amount:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.AssignAmount)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Status:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.Status)</td>
+                        <td><b>Total Received:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.TotalReceived)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Assign Date:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.PalacementDate)</td>
+                        <td><b>Other Due:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.OtherDue)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Last Worked Date:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.LastWorkDate)</td>
+                        <td><b>Total Due:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.TotalDue)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
