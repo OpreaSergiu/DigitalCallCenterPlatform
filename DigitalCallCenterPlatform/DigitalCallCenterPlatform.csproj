@@ -201,6 +201,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BackofficeController.cs" />
+    <Compile Include="Controllers\ClientPortalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\WorkPlatformController.cs" />
@@ -286,6 +287,10 @@
     <Content Include="Views\Backoffice\Trust.cshtml" />
     <Content Include="Views\Backoffice\Newbusiness.cshtml" />
     <Content Include="Views\Backoffice\PaymentRequest.cshtml" />
+    <Content Include="Views\ClientPortal\Index.cshtml" />
+    <Content Include="Views\ClientPortal\Audit.cshtml" />
+    <Content Include="Views\ClientPortal\Payments.cshtml" />
+    <Content Include="Views\ClientPortal\Reports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
