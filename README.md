@@ -36,6 +36,10 @@ Designed used ASP.NET MVC
 4. WorkPlatformController (Controller that will handle any action performed on a specific customer account)
 5. BackofficeController (Controller that will handle all backoffice operation like Add accounts, post trust and post payment requests)
 
+**05-11-2018**
+
+6. ClientPortalController (Controller designated for client actions like Reports Audit and Payments)
+
 ```
 
 
@@ -51,6 +55,10 @@ Designed used ASP.NET MVC
 **04-11-2018**
 
 5. WorkPlatform (Customer Account View)
-6. Backoffice (Views for backoffice actions)
+6. Backoffice (Views for Backoffice actions)
+
+**05-11-2018**
+
+7. ClientPortal(Views for ClientPortal actions)
 
 ```
