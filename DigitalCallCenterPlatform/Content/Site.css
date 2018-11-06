@@ -22,3 +22,16 @@ select,
 textarea {
     max-width: 280px;
 }
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.flex-container .box {
+    background-color: #f4f4f4;
+    width: 30%;
+    margin: 10px;
+    text-align: center;
+    line-height: 50px;
+    font-size: 30px;
+}
