@@ -1,8 +1,11 @@
 ﻿@model DigitalCallCenterPlatform.Models.WorkPlatformAccountViewModels
 
 <div class="container-fluid text-center">
+
     <div class="row content">
+
         <div class="col-sm-5 text-left">
+
             <br />
             <table class="table">
                 <tbody>
@@ -49,6 +52,197 @@
                     </tr>
                 </tbody>
             </table>
+
+            <hr />
+
+            <div>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Prefix</th>
+                            <th>Phone Number</th>
+                            <th>Extension</th>
+                            <th>Click to dial</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Phones)
+                        {
+                            <tr>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Prefix)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Extension) </td>
+                                <td class="filterable-cell">@Html.ActionLink("CALL", "makeCall", new { id = item.Id, account_number = Model.Account.Id })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
+
+        <div class="col-sm-7 sidenav">
+            <div class="container">
+                <br />
+                <ul class="nav nav-tabs" style="width: 55%;">
+                    <li><a data-toggle="tab" href="#notes">History</a></li>
+                    <li><a data-toggle="tab" href="#invoices">Invoices</a></li>
+                    <li><a data-toggle="tab" href="#accountDetails">Account Details</a></li>
+                </ul>
+                <div class="tab-content" style="width: 55%;">
+
+                    <div id="notes" class="tab-pane fade in active" style="overflow-y: scroll; overflow-x: hidden; height: 400px;">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>User</th>
+                                    <th>Action</th>
+                                    <th>Status</th>
+                                    <th>Desk</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Notes)
+                                {
+                                    <tr>
+                                        <td class="filterable-cell" style="word-break: keep-all;">@Html.DisplayFor(modelItem => item.NoteDate)</td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.UserCode)</td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.ActionCode) </td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Status) </td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Desk) </td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Note) </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="invoices" class="tab-pane fade in" style="overflow-y: scroll; overflow-x: hidden; height: 400px;">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Invoice</th>
+                                    <th>Amount</th>
+                                    <th>Due</th>
+                                    <th>Status</th>
+                                    <th>Due Date</th>
+                                    <th>Payment Request</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Invoices)
+                                {
+                                    <tr>
+                                        <td class="filterable-cell" style="word-break: keep-all;">@Html.DisplayFor(modelItem => item.InvoiceDate)</td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Invoice)</td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Amount) </td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Due) </td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Status) </td>
+                                        <td class="filterable-cell" style="word-break: keep-all;">@Html.DisplayFor(modelItem => item.DueDate) </td>
+                                        <td>
+                                            @if ((item.PaymentRequestFlag) | (Model.Account.Status == "CLOSED"))
+                                            {
+                                                if (item.PostedFlag)
+                                                {
+                                                    <p>Posted!</p>
+                                                }
+                                                else
+                                                {
+                                                    if (Model.Account.Status == "CLOSED")
+                                                    {
+                                                        <p>Account Closed!</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>Awaiting Approval!</p>
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink("Submit Payment", "ProcessPaymentRequest", new { id = item.Id })
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div id="accountDetails" class="tab-pane fade in" style="height: 400px;">
+                        <table class="table text-left">
+                            <tbody>
+                                <tr>
+                                    <td><b>Full Name:</b></td>
+                                    <td>@Html.DisplayFor(model => model.Address.FullName)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Contact:</b></td>
+                                    <td>@Html.DisplayFor(model => model.Address.Contact)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Address:</b></td>
+                                    <td>@Html.DisplayFor(model => model.Address.Address)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Email:</b></td>
+                                    <td>@Html.DisplayFor(model => model.Address.Email)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Country:</b></td>
+                                    <td>@Html.DisplayFor(model => model.Address.Country)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Time zone:</b></td>
+                                    <td>@Html.DisplayFor(model => model.Address.TimeZone)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span class="wtb-ew-v1" style="width: 369px; display:inline-block">
+                            <script src="https://www.worldtimebuddy.com/clock_widget.js?h=683506&bc=8BA1BB&cn=&wt=c2"></script><i><a href="https://www.worldtimebuddy.com/kst-to-est-converter">kst to est</a></i><noscript><a href="https://www.worldtimebuddy.com/kst-to-est-converter">kst to est</a></noscript>
+                            <script>window[wtb_event_widgets.pop()].init()</script>
+                        </span>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        @if (Url.RequestContext.RouteData.Values["id"] is null)
+        {
+
+        }
+        else
+        {
+            if (Model.Check)
+            {
+                if (Model.Account.Status != "CLOSED")
+                {
+                    <div align="center">
+                        <form class="form-inline" method="post">
+                            <select class="form-control" id="actioncode" name="actioncode">
+                                <option>Test</option>
+                            </select>
+                            <select class="form-control" id="status" name="status">
+                                <option>Test</option>
+                            </select>
+                            <br />
+                            <br />
+                            <input type="text" class="form-control" id="note" placeholder="Note" name="note">
+                            <br />
+                            <br />
+                            <button type="submit" class="btn">Save changes</button>
+                        </form>
+                    </div>
+                }
+            }
+        }
+
+        <br />
     </div>
 </div>
+
