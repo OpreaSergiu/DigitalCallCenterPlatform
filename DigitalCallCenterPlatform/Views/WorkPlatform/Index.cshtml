@@ -4,6 +4,78 @@
 
     <div class="row content">
 
+        <br />
+        <ul class="nav nav-tabs">
+            <li><a data-toggle="tab" href="#Inventory">My Inventory</a></li>
+            <li><a data-toggle="tab" href="#Search">Search</a></li>
+            <li><a data-toggle="tab" href="#empty"></a></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <div id="Inventory" class="tab-pane fade in" style="overflow-y: scroll; overflow-x: hidden; height: 150px;">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Account Number</th>
+                            <th>Client Reference</th>
+                            <th>Client ID</th>
+                            <th>Name</th>
+                            <th>Desk</th>
+                            <th>Status</th>
+                            <th>Assign Date</th>
+                            <th>Assign amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Inventory)
+                        {
+                        <tr>
+                            <td class="filterable-cell"><a href=" @Html.DisplayFor(modelItem => item.Id)">@Html.DisplayFor(modelItem => item.Id)</a></td>
+                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.ClientReference)</td>
+                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.ClientID)</td>
+                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Desk)</td>
+                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Status)</td>
+                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.PalacementDate)</td>
+                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.AssignAmount)</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="Search" class="tab-pane fade in">
+                <br />
+                @using (Html.BeginForm("Search", "WorkPlatformController", FormMethod.Post, new { @class = "form-inline text-left" }))
+                {
+                    <div class="form-group" style="padding-left: 2%;">
+                        <label for="actioncode" class="control-label" style="padding-left: 1%;">Account Number:</label>
+                        <input type="text" class="form-control" id="accnumber">
+                    </div>
+
+                    <div class="form-group" style="padding-left: 1%;">
+                        <label for="status" class="control-label" style="padding-left: 1%;">Client Reference:</label>
+                        <input type="text" class="form-control" id="clinetref">
+                    </div>
+
+                    <div class="form-group" style="padding-left: 1%;">
+                        <label for="status" class="control-label" style="padding-left: 1%;">Invoice Number:</label>
+                        <input type="text" class="form-control" id="clinetref">
+                    </div>
+
+                    <div class="form-group" style="padding-left: 1%;">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                }
+            </div>
+
+            <div id="empty" class="tab-pane fade in active">
+            </div>
+
+        </div>
+
+
         <div class="col-sm-5 text-left">
 
             <br />

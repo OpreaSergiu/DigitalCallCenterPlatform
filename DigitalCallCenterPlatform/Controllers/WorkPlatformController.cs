@@ -36,6 +36,9 @@ namespace DigitalCallCenterPlatform.Controllers
 
                 Notes = db.NotesModels.Where(m => m.AccountNumber == -1).OrderByDescending(s => s.SeqNumber),
 
+                //Just for testing
+                Inventory = db.WorkPlatformModels.Where(m => m.Id == 1),
+
                 Actions = db.ActionsModels.Where(m => m.Id == -1),
 
                 Statuses = db.StatusesModels.Where(m => m.Id == -1),
@@ -56,6 +59,9 @@ namespace DigitalCallCenterPlatform.Controllers
                 Invoices = db.InvoiceModels.Where(m => m.AccountNumber == id),
 
                 Notes = db.NotesModels.Where(m => m.AccountNumber == id).OrderByDescending(s => s.SeqNumber),
+
+                //Just for testing
+                Inventory = db.WorkPlatformModels.Where(m => m.Id == 1),
 
                 Actions = db.ActionsModels.OrderBy(a => a.Action),
 
