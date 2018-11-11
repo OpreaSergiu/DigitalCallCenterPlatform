@@ -214,12 +214,14 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ActionsModels.cs" />
     <Compile Include="Models\AddressModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvoiceModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NotesModels.cs" />
     <Compile Include="Models\PhoneModels.cs" />
+    <Compile Include="Models\StatusesModels.cs" />
     <Compile Include="Models\WorkPlatformAccountViewModels.cs" />
     <Compile Include="Models\WorkPlatformModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

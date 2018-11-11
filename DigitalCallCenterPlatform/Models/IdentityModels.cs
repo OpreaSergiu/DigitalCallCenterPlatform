@@ -35,5 +35,7 @@ namespace DigitalCallCenterPlatform.Models
         public DbSet<NotesModels> NotesModels { get; set; }
         public DbSet<InvoiceModels> InvoiceModels { get; set; }
         public DbSet<AddressModels> AddressModels { get; set; }
+        public DbSet<ActionsModels> ActionsModels { get; set; }
+        public DbSet<StatusesModels> StatusesModels { get; set; }
     }
 }

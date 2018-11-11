@@ -23,6 +23,27 @@ namespace DigitalCallCenterPlatform.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            // An empty model that will be use to avoit id errors and diplay blank pages
+            var emptyModel = new WorkPlatformAccountViewModels()
+            {           
+                Account = db.WorkPlatformModels.Where(m => m.Id == -1).SingleOrDefault(),
+
+                Phones = db.PhoneModels.Where(m => m.AccountNumber == -1),
+
+                Address = db.AddressModels.Where(m => m.AccountNumber == -1).SingleOrDefault(),
+
+                Invoices = db.InvoiceModels.Where(m => m.AccountNumber == -1),
+
+                Notes = db.NotesModels.Where(m => m.AccountNumber == -1).OrderByDescending(s => s.SeqNumber),
+
+                Actions = db.ActionsModels.Where(m => m.Id == -1),
+
+                Statuses = db.StatusesModels.Where(m => m.Id == -1),
+
+                Check = true
+
+            };
+
             // Get the data that will be provided to the view
             var model = new WorkPlatformAccountViewModels()
             {
@@ -36,6 +57,10 @@ namespace DigitalCallCenterPlatform.Controllers
 
                 Notes = db.NotesModels.Where(m => m.AccountNumber == id).OrderByDescending(s => s.SeqNumber),
 
+                Actions = db.ActionsModels.OrderBy(a => a.Action),
+
+                Statuses = db.StatusesModels.OrderBy(s => s.Status),
+
                 Check = true
             };
 
@@ -48,5 +73,7 @@ namespace DigitalCallCenterPlatform.Controllers
             // Return the data to the view
             return View(model);
         }
+
+
     }
 }

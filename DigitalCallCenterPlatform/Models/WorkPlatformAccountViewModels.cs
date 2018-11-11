@@ -14,5 +14,7 @@ namespace DigitalCallCenterPlatform.Models
         public WorkPlatformModels Account { get; set; }
         public bool Check { get; set; }
         public IEnumerable<WorkPlatformModels> Inventory { get; set; }
+        public IEnumerable<ActionsModels> Actions { get; set; }
+        public IEnumerable<StatusesModels> Statuses { get; set; }
     }
 }

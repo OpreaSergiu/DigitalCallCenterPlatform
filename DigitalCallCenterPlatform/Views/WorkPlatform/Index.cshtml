@@ -212,6 +212,7 @@
             </div>
         </div>
 
+
         @if (Url.RequestContext.RouteData.Values["id"] is null)
         {
 
@@ -222,22 +223,47 @@
             {
                 if (Model.Account.Status != "CLOSED")
                 {
-                    <div align="center">
-                        <form class="form-inline" method="post">
-                            <select class="form-control" id="actioncode" name="actioncode">
-                                <option>Test</option>
-                            </select>
-                            <select class="form-control" id="status" name="status">
-                                <option>Test</option>
-                            </select>
-                            <br />
-                            <br />
-                            <input type="text" class="form-control" id="note" placeholder="Note" name="note">
-                            <br />
-                            <br />
-                            <button type="submit" class="btn">Save changes</button>
-                        </form>
-                    </div>
+                    using (Html.BeginForm("AddNote", "WorkPlatformController", FormMethod.Post, new { @class = "form-horizontal" }))
+                    {
+                        <div class="col-sm-5 text-right">
+                            <div class="form-group col">
+                                <label for="actioncode" class="col-sm-6 control-label">Action:</label>
+                                <div class="col-sm-6">
+                                    <select id="actioncode" class="form-control" name="actioncode">
+                                        @foreach (var item in Model.Actions)
+                                        {
+                                            <option>@item.Action</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="status" class="col-sm-6 control-label">Status:</label>
+                                <div class="col-sm-6">
+                                    <select id="status" class="form-control" name="status">
+                                        @foreach (var item in Model.Statuses)
+                                        {
+                                            <option>@item.Status</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-7 text-left">
+                            <div class="form-group">
+                                <textarea class="form-control" rows="4" id="note"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-10">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    }
+
                 }
             }
         }
