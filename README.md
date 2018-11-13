@@ -22,8 +22,14 @@ Designed used ASP.NET MVC
 7. InvoiceModels (Invoices on a specific customer account)
 8. AddressModels (Addresses on a specific customer account)
 9. WorkPlatformAccountViewModels (View Model for the WorkPlatform page)
+
+**12-11-2018**
+
 10. ActionsModels (List with all available action codes)
 11. StatusesModels (List with all available statuses)
+
+**13-11-2018**
+
 12. PaymentsModels (Keep track of all payments made in system)
 
 ```
