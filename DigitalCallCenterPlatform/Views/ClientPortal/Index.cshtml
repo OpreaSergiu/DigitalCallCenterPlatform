@@ -1,7 +1,23 @@
-﻿
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "Client Portal";
 }
 
-<h2>Index</h2>
+<div class="container">
+    <h2>Client Portal</h2>
+    <ul class="nav flex-column" style="width: 30%; font-size:large;"">
+        <li class="nav-item">
+            <a class="nav-link" href="/ClientPortal/Audit">Audit<span style="float:right" class="fas fa-eye"></span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/ClientPortal/Inventory">Load Inventory<span style="float:right" class="fas fa-folder-plus"></span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/ClientPortal/Payments">Payments<span style="float:right" class="fas fa-money-bill-alt"></span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/ClientPortal/Reports">Reports<span style="float:right" class="fas fa-chart-bar"></span></a>
+        </li>
+    </ul>
+</div>
+
 

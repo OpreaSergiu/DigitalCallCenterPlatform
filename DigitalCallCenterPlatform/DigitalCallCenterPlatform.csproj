@@ -200,6 +200,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BackofficeController.cs" />
     <Compile Include="Controllers\ClientPortalController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Models\InvoiceModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NotesModels.cs" />
+    <Compile Include="Models\PaymentsModels.cs" />
     <Compile Include="Models\PhoneModels.cs" />
     <Compile Include="Models\StatusesModels.cs" />
     <Compile Include="Models\WorkPlatformAccountViewModels.cs" />
@@ -293,6 +295,7 @@
     <Content Include="Views\ClientPortal\Audit.cshtml" />
     <Content Include="Views\ClientPortal\Payments.cshtml" />
     <Content Include="Views\ClientPortal\Reports.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

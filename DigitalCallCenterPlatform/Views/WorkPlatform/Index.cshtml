@@ -30,16 +30,16 @@
                     <tbody>
                         @foreach (var item in Model.Inventory)
                         {
-                        <tr>
-                            <td class="filterable-cell"><a href=" @Html.DisplayFor(modelItem => item.Id)">@Html.DisplayFor(modelItem => item.Id)</a></td>
-                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.ClientReference)</td>
-                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.ClientID)</td>
-                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Name)</td>
-                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Desk)</td>
-                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Status)</td>
-                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.PalacementDate)</td>
-                            <td class="filterable-cell">@Html.DisplayFor(modelItem => item.AssignAmount)</td>
-                        </tr>
+                            <tr>
+                                <td class="filterable-cell"><a href=" @Html.DisplayFor(modelItem => item.Id)">@Html.DisplayFor(modelItem => item.Id)</a></td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.ClientReference)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.ClientID)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Desk)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.PalacementDate)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.AssignAmount)</td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -144,7 +144,7 @@
                                 <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Prefix)</td>
                                 <td class="filterable-cell">@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
                                 <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Extension) </td>
-                                <td class="filterable-cell">@Html.ActionLink("CALL", "makeCall", new { id = item.Id, account_number = Model.Account.Id })</td>
+                                <td class="filterable-cell" style="text-align:center"><span class="fas fa-phone-volume" style="padding-right: 10%;"></span>@Html.ActionLink("CALL", "makeCall", new { id = item.Id, account_number = Model.Account.Id })</td>
                             </tr>
                         }
                     </tbody>
@@ -295,12 +295,13 @@
             {
                 if (Model.Account.Status != "CLOSED")
                 {
-                    using (Html.BeginForm("AddNote", "WorkPlatformController", FormMethod.Post, new { @class = "form-horizontal" }))
+                    using (Html.BeginForm("AddNote", "WorkPlatform", FormMethod.Post, new { @class = "form-horizontal" }))
                     {
                         <div class="col-sm-5 text-right">
                             <div class="form-group col">
                                 <label for="actioncode" class="col-sm-6 control-label">Action:</label>
                                 <div class="col-sm-6">
+                                    @Html.Hidden("id")
                                     <select id="actioncode" class="form-control" name="actioncode">
                                         @foreach (var item in Model.Actions)
                                         {
@@ -325,7 +326,7 @@
 
                         <div class="col-sm-7 text-left">
                             <div class="form-group">
-                                <textarea class="form-control" rows="4" id="note"></textarea>
+                                @Html.TextArea("note", null, new { @class = "form-control", @rows = "4"})
                             </div>
                         </div>
 

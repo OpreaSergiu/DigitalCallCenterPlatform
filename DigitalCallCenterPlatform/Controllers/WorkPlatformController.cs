@@ -37,7 +37,7 @@ namespace DigitalCallCenterPlatform.Controllers
                 Notes = db.NotesModels.Where(m => m.AccountNumber == -1).OrderByDescending(s => s.SeqNumber),
 
                 //Just for testing
-                Inventory = db.WorkPlatformModels.Where(m => m.Id == 1),
+                Inventory = db.WorkPlatformModels.Where(m => m.Id == 1).OrderBy(d => d.LastWorkDate),
 
                 Actions = db.ActionsModels.Where(m => m.Id == -1),
 
@@ -61,7 +61,7 @@ namespace DigitalCallCenterPlatform.Controllers
                 Notes = db.NotesModels.Where(m => m.AccountNumber == id).OrderByDescending(s => s.SeqNumber),
 
                 //Just for testing
-                Inventory = db.WorkPlatformModels.Where(m => m.Id == 1),
+                Inventory = db.WorkPlatformModels.Where(m => m.Id == 1).OrderBy(d => d.LastWorkDate),
 
                 Actions = db.ActionsModels.OrderBy(a => a.Action),
 
@@ -78,6 +78,74 @@ namespace DigitalCallCenterPlatform.Controllers
 
             // Return the data to the view
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult AddNote(string actioncode, string status, string note, int id)
+        {
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+
+            int maxAge = db.NotesModels.Where(m => m.AccountNumber == id).Max(p => p.SeqNumber);
+
+            //var user_desk = db.UserDeskModels.SingleOrDefault(b => b.UserEmail == user_name);
+
+            var result = db.WorkPlatformModels.SingleOrDefault(b => b.Id == id);
+            if (result != null)
+            {
+                result.LastWorkDate = currentDate;
+                result.Desk = "TST";//user_desk.Desk;
+                result.Status = status;
+                db.SaveChanges();
+            }
+
+            var newNote = new NotesModels();
+
+            newNote.AccountNumber = id;
+            newNote.ActionCode = actioncode;
+            newNote.Status = status;
+            newNote.Note = note;
+            newNote.SeqNumber = maxAge + 1;
+            newNote.NoteDate = currentDate;
+            newNote.UserCode = "TST";//user_desk.Desk;
+            newNote.Desk = "TST";//user_desk.Desk;
+
+            db.NotesModels.Add(newNote);
+            db.SaveChanges();
+
+            string redirectUrl = "/WorkPlatform/Index/" + id;
+            return Redirect(redirectUrl);
+        }
+
+        public ActionResult ProcessPaymentRequest(int id)
+        {
+            var result = db.InvoiceModels.SingleOrDefault(b => b.Id == id);
+            if (result != null)
+            {
+                result.PaymentRequestFlag = true;
+                db.SaveChanges();
+            }
+
+            var newPayment = new PaymentsModels();
+            var InvModel = db.InvoiceModels.Find(id);
+            var AccModel = db.WorkPlatformModels.Find(InvModel.AccountNumber);
+            var currentDate = DateTime.Now;
+
+            newPayment.AccountNumber = AccModel.Id;
+            newPayment.ClientID = AccModel.ClientID;
+            newPayment.ClientReference = AccModel.ClientReference;
+            newPayment.Invoice = InvModel.Invoice;
+            newPayment.Amount = InvModel.Due;
+            newPayment.PaymentDate = currentDate;
+            newPayment.Approve = false;
+            newPayment.PostedFlag = false;
+
+            db.PaymentsModels.Add(newPayment);
+            db.SaveChanges();
+
+            string redirectUrl = "/WorkPlatform/Index/" + AccModel.Id;
+
+            return Redirect(redirectUrl);
         }
 
 
