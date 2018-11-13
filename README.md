@@ -24,6 +24,7 @@ Designed used ASP.NET MVC
 9. WorkPlatformAccountViewModels (View Model for the WorkPlatform page)
 10. ActionsModels (List with all available action codes)
 11. StatusesModels (List with all available statuses)
+12. PaymentsModels (Keep track of all payments made in system)
 
 ```
 
