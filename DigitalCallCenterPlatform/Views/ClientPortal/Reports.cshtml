@@ -1,7 +1,33 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Reports";
 }
 
-<h2>Reports</h2>
-
+<div class="container">
+    <h2>Reports</h2>
+    <div class="row content" style="background:white;">
+        <div class="col-sm-4 text-left">
+            <ul class="nav flex-column" style="font-size:large;">
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" data-target="#report1">Inventory Report<span style="float:right" class="fas fa-chart-bar"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" data-target="#report2">Recovery Report<span style="float:right" class="fas fa-chart-pie"></span></a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-sm-4 text-left">
+            <div id="report1" class="collapse">
+                Report containing basic information about the whole inventory (Account number, Client reference, Desk, Status, Total Assign, Total Due)
+                <br />
+                <br />
+                @Html.ActionLink("Generate Inventory Report.", "GenerateInventoryRerport")
+            </div>
+            <div id="report2" class="collapse">
+                Report containing charts showing recovery percent by status and details at account level.
+                <br />
+                <br />
+                @Html.ActionLink("Generate Recovery Report.", "GenerateRecoveryRerport")
+            </div>
+        </div>
+    </div>
+</div>

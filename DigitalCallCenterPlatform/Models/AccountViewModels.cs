@@ -81,6 +81,21 @@ namespace DigitalCallCenterPlatform.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class AdminRegisterViewModel
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Role")]
+        public string Role { get; set; }
+
+        public IEnumerable<string> roles { get; set; }
+    }
+
     public class ResetPasswordViewModel
     {
         [Required]

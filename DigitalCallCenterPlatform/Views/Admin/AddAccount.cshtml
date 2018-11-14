@@ -1,0 +1,35 @@
+﻿@model DigitalCallCenterPlatform.Models.AdminRegisterViewModel
+@{
+    ViewBag.Title = "Accounts";
+}
+
+<h2>Add Account</h2>
+
+@using (Html.BeginForm("AddAccount", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Role, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            <select id="Role" class="form-control" name="Role">
+                @foreach (var item in Model.roles)
+                {
+                    <option>@item</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Add Member" />
+        </div>
+    </div>
+}

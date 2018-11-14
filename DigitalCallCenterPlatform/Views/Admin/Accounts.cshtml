@@ -1,0 +1,39 @@
+﻿@model IEnumerable<DigitalCallCenterPlatform.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Accounts";
+}
+
+<h2>Accounts</h2>
+
+<hr />
+<div class="row content" style="background:white;">
+    <div class="col-sm-6 text-left">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div class="col-sm-6 text-center">
+        <h3>@Html.ActionLink("Create New Account", "AddAccount")</h3>
+    </div>
+</div>
