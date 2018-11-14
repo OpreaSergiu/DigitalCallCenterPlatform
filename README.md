@@ -32,6 +32,11 @@ Designed used ASP.NET MVC
 
 12. PaymentsModels (Keep track of all payments made in system)
 
+**15-11-2018**
+
+13. AdminRolesModel (Elements of the role model used in the view model)
+14. AdminRolesViewModel (View Model for the Role section of Admin Panel)
+
 ```
 
 ```markdown
@@ -50,6 +55,10 @@ Designed used ASP.NET MVC
 **05-11-2018**
 
 6. ClientPortalController (Controller designated for client actions like Reports Audit and Payments)
+
+**15-11-2018**
+
+7. AdminContoller (Controller designated for aadmin actions like creating accounts, view logs, update roles and client id's)
 
 ```
 
@@ -71,5 +80,9 @@ Designed used ASP.NET MVC
 **05-11-2018**
 
 7. ClientPortal(Views for ClientPortal actions)
+
+**15-11-2018**
+
+8. Admin(Views for Admin Panel actions)
 
 ```
