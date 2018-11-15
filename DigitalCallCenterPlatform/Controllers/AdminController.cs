@@ -81,7 +81,17 @@ namespace DigitalCallCenterPlatform.Controllers
                 if (result.Succeeded)
                 {
                     await UserManager.AddToRoleAsync(user.Id, model.Role);
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+                    var userClientId = new UserClientidModels
+                    {
+                        UserEmail = model.Email,
+                        ClientId = ""
+                    };
+
+                    db.UserClientidModels.Add(userClientId);
+                    db.SaveChanges();
+
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
@@ -171,7 +181,7 @@ namespace DigitalCallCenterPlatform.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddRoleAsync(string id, string role, string type)
+        public async Task<ActionResult> ChangeRoleAsync(string id, string role, string type)
         {
             if (type == "Add")
             {
@@ -205,6 +215,94 @@ namespace DigitalCallCenterPlatform.Controllers
             }
 
             return RedirectToAction("Roles");
+        }
+
+        public ActionResult Clientids()
+        {
+            var users = db.Users.ToList();
+
+            var model_list = new List<AdminClientModel>
+            { };
+
+            foreach (var item in users)
+            {
+                string clientid_list = "";
+
+                var clientUserList = db.UserClientidModels.Where(u => u.UserEmail == item.Email);
+
+                foreach (var client in clientUserList)
+                {
+                    clientid_list = clientid_list + client.ClientId + " ";
+                }
+                 
+                var user_clients = new AdminClientModel()
+                {
+                    Id = item.Id,
+                    Username = item.Email,
+                    Client = clientid_list
+                };
+
+                model_list.Add(user_clients);
+            }
+
+            var model = new AdminClientsViewModel()
+            {
+                AdminClientList = model_list
+            };
+
+            return View(model);
+        }
+
+
+        public ActionResult ChangeClientids(string id = "empty")
+        {
+            // Check for null
+            if (id == "empty")
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var models = new AdminClientModel()
+            {
+                Id = id,
+                Username = db.Users.Find(id).Email,
+                Client = ""
+            };
+
+            return View(models);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ChangeClientIdAsync(string id, string client, string type)
+        {
+            var Username = db.Users.Find(id).Email;
+            var clientUserList = db.UserClientidModels.Where(u => u.UserEmail == Username).Where(c => c.ClientId == client);
+
+            if (type == "Add")
+            {
+                if (clientUserList.Count() == 0)
+                {
+                    var userClientId = new UserClientidModels
+                    {
+                        UserEmail = Username,
+                        ClientId = client
+                    };
+
+                    db.UserClientidModels.Add(userClientId);
+                    db.SaveChanges();
+                }
+            }
+            else
+            {
+                if (clientUserList.Count() > 0)
+                {
+                    var clientUserRemove = db.UserClientidModels.Where(u => u.UserEmail == Username).Where(c => c.ClientId == client).SingleOrDefault();
+                    db.UserClientidModels.Remove(clientUserRemove);
+                    db.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("Clientids");
         }
     }
 }
