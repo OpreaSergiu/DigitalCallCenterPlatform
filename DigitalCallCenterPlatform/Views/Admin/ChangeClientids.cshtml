@@ -1,5 +1,48 @@
-﻿@{
+﻿@model DigitalCallCenterPlatform.Models.AdminClientModel
+@{
     ViewBag.Title = "ChangeClientids";
 }
 
-<h2>ChangeClientids</h2>
+<h2>Change Client ID</h2>
+
+<hr />
+
+@using (Html.BeginForm("ChangeClientIdAsync", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="col-md-2 text-right">
+            <b>@Html.DisplayNameFor(m => m.Id)</b>
+        </div>
+        <div class="col-md-10">
+            @Html.DisplayFor(m => m.Id, new { @class = "form-control" })
+            @Html.Hidden("id")
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-2 text-right">
+            <b>@Html.DisplayNameFor(m => m.Username)</b>
+        </div>
+        <div class="col-md-10">
+            @Html.DisplayFor(m => m.Username, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Client, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Client, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="radio" name="type" value="Add" checked> Add<br>
+            <input type="radio" name="type" value="Remove"> Remove<br>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Submit" />
+        </div>
+    </div>
+}

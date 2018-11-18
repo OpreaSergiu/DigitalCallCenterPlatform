@@ -1,5 +1,48 @@
-﻿@{
+﻿@model DigitalCallCenterPlatform.Models.AdminClientsViewModel
+
+@{
     ViewBag.Title = "Client ids";
 }
 
-<h2>Clientids</h2>
+<h2>Client ID's</h2>
+
+<hr />
+<div class="row content" style="background:white;">
+    <div class="col-sm-9 text-left">
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Client IDs
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+
+            @foreach (var item in Model.AdminClientList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Username)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Client)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Change", "ChangeClientids", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
