@@ -5,3 +5,52 @@
 
 <h2>Trust</h2>
 
+<hr />
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-6 text-left">
+            <br />
+            <p style="font-size:large">
+                <b>EXPECTED FORMAT:</b>
+                <br />
+                <br />
+                File format needs to be <b>csv</b>.
+                <br />
+                <br />
+                Column order does not matter and column names are case insensitive for all columns.
+                <br />
+                <br />
+                The following columns are <b>required</b>:
+                <br />
+                <code>acc_number, inv_number, amount</code>
+            </p>
+
+            <br />
+
+            @using (Html.BeginForm("Trust", "Backoffice", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <span>Select File:</span>
+                <input class="btn btn-default" type="file" name="postedFile" />
+                <br />
+                <input class="btn btn-primary" type="submit" value="Upload" />
+                <br />
+                <span style="color:green">@ViewBag.FileMessage</span>
+            }
+            <br />
+        </div>
+        <div class="col-sm-6 text-left">
+            <br />
+            <b>Batch Result:</b>
+            <br />
+            <div class="well">
+                <p>
+                    @ViewBag.InvoiceCount Invoices processed
+                    <br />
+                    -------------------------
+                    <br />
+                    @ViewBag.PaymentAmount Total payment amount
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
