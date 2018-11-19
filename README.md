@@ -35,7 +35,16 @@ Designed used ASP.NET MVC
 **15-11-2018**
 
 13. AdminRolesModel (Elements of the role model used in the view model)
-14. AdminRolesViewModel (View Model for the Role section of Admin Panel)
+14. AdminRolesViewModel (View Model for the Roles section of Admin Panel)
+15. UserClientidModels (A table that contains clients ids per users)
+16. AdminClientModel (Elements of the client model used in the view model)
+17. AdminClientsViewModel (View Model for the Clients section of Admin Panel)
+
+**19-11-2018**
+
+18. UserDeskModels (A table that contains desks per user)
+19. BackofficeDesksModel (Elements of the desk model used in the view model)
+20. BackofficeDesksViewModel (View Model for the Desks section of Backoffice)
 
 ```
 
