@@ -39,5 +39,6 @@ namespace DigitalCallCenterPlatform.Models
         public DbSet<StatusesModels> StatusesModels { get; set; }
         public DbSet<PaymentsModels> PaymentsModels { get; set; }
         public DbSet<UserClientidModels> UserClientidModels { get; set; }
+        public DbSet<UserDeskModels> UserDeskModels { get; set; }
     }
 }

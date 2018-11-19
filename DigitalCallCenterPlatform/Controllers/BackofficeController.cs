@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -85,6 +86,105 @@ namespace DigitalCallCenterPlatform.Controllers
             }
 
             return RedirectToAction("PaymentRequest");
+        }
+
+        public ActionResult Desks()
+        {
+            var users = db.Users.ToList();
+
+            var model_list = new List<BackofficeDesksModel>
+            { };
+
+            foreach (var item in users)
+            {
+                string desks = "";
+
+                var deskUserList = db.UserDeskModels.Where(u => u.UserEmail == item.Email);
+
+                foreach (var desk in deskUserList)
+                {
+                    desks = desks + desk.Desk + " ";
+                }
+
+                string clientid_list = "";
+
+                var clientUserList = db.UserClientidModels.Where(u => u.UserEmail == item.Email);
+
+                foreach (var client in clientUserList)
+                {
+                    clientid_list = clientid_list + client.ClientId + " ";
+                }
+
+                var user_clients = new BackofficeDesksModel()
+                {
+                    Id = item.Id,
+                    Username = item.Email,
+                    Desk = desks,
+                    Client = clientid_list
+                };
+
+                model_list.Add(user_clients);
+            }
+
+            var model = new BackofficeDesksViewModel()
+            {
+                BackofficeDesksList = model_list
+            };
+
+            return View(model);
+        }
+
+
+        public ActionResult ChangeDesks(string id = "empty")
+        {
+            // Check for null
+            if (id == "empty")
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var models = new BackofficeDesksModel()
+            {
+                Id = id,
+                Username = db.Users.Find(id).Email,
+                Desk = "",
+                Client = ""
+            };
+
+            return View(models);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ChangeDesksAsync(string id, string desk, string type)
+        {
+            var Username = db.Users.Find(id).Email;
+            var clientDeskList = db.UserDeskModels.Where(u => u.UserEmail == Username).Where(c => c.Desk == desk);
+
+            if (type == "Add")
+            {
+                if (clientDeskList.Count() == 0)
+                {
+                    var useDeskId = new UserDeskModels
+                    {
+                        UserEmail = Username,
+                        Desk = desk
+                    };
+
+                    db.UserDeskModels.Add(useDeskId);
+                    db.SaveChanges();
+                }
+            }
+            else
+            {
+                if (clientDeskList.Count() > 0)
+                {
+                    var DeskUserRemove = db.UserDeskModels.Where(u => u.UserEmail == Username).Where(c => c.Desk == desk).SingleOrDefault();
+                    db.UserDeskModels.Remove(DeskUserRemove);
+                    db.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("Desks");
         }
     }
 }

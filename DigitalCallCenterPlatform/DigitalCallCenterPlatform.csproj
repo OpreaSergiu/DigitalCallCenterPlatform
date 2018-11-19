@@ -221,6 +221,8 @@
     <Compile Include="Models\AdminClientsViewModel.cs" />
     <Compile Include="Models\AdminRolesModel.cs" />
     <Compile Include="Models\AdminRolesViewModel.cs" />
+    <Compile Include="Models\BackofficeDesksModel.cs" />
+    <Compile Include="Models\BackofficeDesksViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvoiceModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -229,6 +231,7 @@
     <Compile Include="Models\PhoneModels.cs" />
     <Compile Include="Models\StatusesModels.cs" />
     <Compile Include="Models\UserClientidModels.cs" />
+    <Compile Include="Models\UserDeskModels.cs" />
     <Compile Include="Models\WorkPlatformAccountViewModels.cs" />
     <Compile Include="Models\WorkPlatformModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -307,6 +310,8 @@
     <Content Include="Views\Admin\ChangeRole.cshtml" />
     <Content Include="Views\Admin\Clientids.cshtml" />
     <Content Include="Views\Admin\ChangeClientids.cshtml" />
+    <Content Include="Views\Backoffice\Desks.cshtml" />
+    <Content Include="Views\Backoffice\ChangeDesks.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

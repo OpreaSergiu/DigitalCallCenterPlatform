@@ -1,10 +1,10 @@
-﻿@model DigitalCallCenterPlatform.Models.AdminClientsViewModel
+﻿@model DigitalCallCenterPlatform.Models.BackofficeDesksViewModel
 
 @{
-    ViewBag.Title = "Client ids";
+    ViewBag.Title = "Desks";
 }
 
-<h2>Client ID's</h2>
+<h2>Desks</h2>
 
 <hr />
 <div class="row content" style="background:white;">
@@ -12,25 +12,22 @@
         <table class="table table-striped table-bordered">
             <tr>
                 <th>
-                    ID
-                </th>
-                <th>
                     Email
                 </th>
                 <th>
                     Client IDs
                 </th>
                 <th>
+                    Desks
+                </th>
+                <th>
                     Action
                 </th>
             </tr>
 
-            @foreach (var item in Model.AdminClientList)
+            @foreach (var item in Model.BackofficeDesksList)
             {
                 <tr style="text-align:center;">
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Username)
                     </td>
@@ -38,7 +35,10 @@
                         @Html.DisplayFor(modelItem => item.Client)
                     </td>
                     <td>
-                        @Html.ActionLink("Change", "ChangeClientids", new { id = item.Id })
+                        @Html.DisplayFor(modelItem => item.Desk)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Change", "ChangeDesks", new { id = item.Id })
                     </td>
                 </tr>
             }
