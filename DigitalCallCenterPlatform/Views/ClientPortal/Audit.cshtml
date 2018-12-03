@@ -1,7 +1,349 @@
-﻿
+﻿@model DigitalCallCenterPlatform.Models.WorkPlatformAccountViewModels
+
 @{
     ViewBag.Title = "Audit";
 }
 
-<h2>Audit</h2>
+<div class="container-fluid text-center">
+
+    <div class="row content">
+
+        <br />
+        <ul class="nav nav-tabs">
+            <li><a data-toggle="tab" href="#Inventory">Inventory</a></li>
+            <li><a data-toggle="tab" href="#Search">Search</a></li>
+            <li><a data-toggle="tab" href="#empty"></a></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <div id="Inventory" class="tab-pane fade in" style="overflow-y: scroll; overflow-x: hidden; height: 150px;">
+                <table class="table table-striped table-bordered" style="background:white;">
+                    <thead>
+                        <tr>
+                            <th>Account Number</th>
+                            <th>Client Reference</th>
+                            <th>Client ID</th>
+                            <th>Name</th>
+                            <th>Desk</th>
+                            <th>Status</th>
+                            <th>Assign Date</th>
+                            <th>Assign amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Inventory)
+                        {
+                            <tr>
+                                <td class="filterable-cell"><a href="@Html.DisplayFor(modelItem => item.Id)">@Html.DisplayFor(modelItem => item.Id)</a></td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.ClientReference)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.ClientID)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Desk)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Status)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.PalacementDate)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.AssignAmount)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="Search" class="tab-pane fade in">
+                <br />
+                @using (Html.BeginForm("Search", "ClientPortal", FormMethod.Post, new { @class = "form-inline text-left" }))
+                {
+                    <div class="form-group" style="padding-left: 2%;">
+                        <label for="actioncode" class="control-label" style="padding-left: 1%;">Account Number:</label>
+                        <input type="text" class="form-control" id="accnumber">
+                    </div>
+
+                    <div class="form-group" style="padding-left: 1%;">
+                        <label for="status" class="control-label" style="padding-left: 1%;">Client Reference:</label>
+                        <input type="text" class="form-control" id="clinetref">
+                    </div>
+
+                    <div class="form-group" style="padding-left: 1%;">
+                        <label for="status" class="control-label" style="padding-left: 1%;">Invoice Number:</label>
+                        <input type="text" class="form-control" id="clinetref">
+                    </div>
+
+                    <div class="form-group" style="padding-left: 1%;">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                }
+            </div>
+
+            <div id="empty" class="tab-pane fade in active">
+            </div>
+
+        </div>
+
+
+        <div class="col-sm-5 text-left">
+
+            <br />
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td><b>Account Number:</b> @Html.DisplayFor(model => model.Account.Id)</td>
+                        <td><b>Client Reference:</b> @Html.DisplayFor(model => model.Account.ClientReference)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Name:</b> @Html.DisplayFor(model => model.Account.Name)</td>
+                        <td><b>Client ID:</b> @Html.DisplayFor(model => model.Account.ClientID)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br />
+
+            <table class="table">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Desk:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.Desk)</td>
+                        <td><b>Assign amount:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.AssignAmount)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Status:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.Status)</td>
+                        <td><b>Total Received:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.TotalReceived)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Assign Date:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.PalacementDate)</td>
+                        <td><b>Other Due:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.OtherDue)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Last Worked Date:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.LastWorkDate)</td>
+                        <td><b>Total Due:</b></td>
+                        <td>@Html.DisplayFor(model => model.Account.TotalDue)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr />
+
+            <div>
+                <table class="table table-striped table-bordered" style="background:white;">
+                    <thead>
+                        <tr>
+                            <th>Prefix</th>
+                            <th>Phone Number</th>
+                            <th>Extension</th>
+                            <th>Click to dial</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Phones)
+                        {
+                            <tr>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Prefix)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                                <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Extension) </td>
+                                <td class="filterable-cell" style="text-align:center"><span class="fas fa-phone-volume" style="padding-right: 10%;"></span>@Html.ActionLink("CALL", "makeCall", new { id = item.Id, account_number = Model.Account.Id })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-sm-7 sidenav">
+            <div class="container">
+                <br />
+                <ul class="nav nav-tabs" style="width: 55%;">
+                    <li><a data-toggle="tab" href="#notes">History</a></li>
+                    <li><a data-toggle="tab" href="#invoices">Invoices</a></li>
+                    <li><a data-toggle="tab" href="#accountDetails">Account Details</a></li>
+                </ul>
+                <div class="tab-content" style="width: 55%;">
+
+                    <div id="notes" class="tab-pane fade in active" style="overflow-y: scroll; overflow-x: hidden; height: 400px;">
+                        <table class="table table-striped table-bordered" style="background:white;">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>User</th>
+                                    <th>Action</th>
+                                    <th>Status</th>
+                                    <th>Desk</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Notes)
+                                {
+                                    <tr>
+                                        <td class="filterable-cell" style="word-break: keep-all;">@Html.DisplayFor(modelItem => item.NoteDate)</td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.UserCode)</td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.ActionCode) </td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Status) </td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Desk) </td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Note) </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="invoices" class="tab-pane fade in" style="overflow-y: scroll; overflow-x: hidden; height: 400px;">
+                        <table class="table table-striped table-bordered" style="background:white;">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Invoice</th>
+                                    <th>Amount</th>
+                                    <th>Due</th>
+                                    <th>Status</th>
+                                    <th>Due Date</th>
+                                    <th>Payment Request</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Invoices)
+                                {
+                                    <tr>
+                                        <td class="filterable-cell" style="word-break: keep-all;">@Html.DisplayFor(modelItem => item.InvoiceDate)</td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Invoice)</td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Amount) </td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Due) </td>
+                                        <td class="filterable-cell">@Html.DisplayFor(modelItem => item.Status) </td>
+                                        <td class="filterable-cell" style="word-break: keep-all;">@Html.DisplayFor(modelItem => item.DueDate) </td>
+                                        <td>
+                                            @if ((item.PaymentRequestFlag) | (Model.Account.Status == "CLOSED"))
+                                            {
+                                                if (item.PostedFlag)
+                                                {
+                                                    <p>Posted!</p>
+                                                }
+                                                else
+                                                {
+                                                    if (Model.Account.Status == "CLOSED")
+                                                    {
+                                                        <p>Account Closed!</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>Awaiting Approval!</p>
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink("Submit Payment", "ProcessPaymentRequest", new { id = item.Id })
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div id="accountDetails" class="tab-pane fade in" style="height: 400px;">
+                        <table class="table text-left">
+                            <tbody>
+                                <tr>
+                                    <td><b>Full Name:</b></td>
+                                    <td>@Html.DisplayFor(model => model.Address.FullName)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Contact:</b></td>
+                                    <td>@Html.DisplayFor(model => model.Address.Contact)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Address:</b></td>
+                                    <td>@Html.DisplayFor(model => model.Address.Address)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Email:</b></td>
+                                    <td>@Html.DisplayFor(model => model.Address.Email)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Country:</b></td>
+                                    <td>@Html.DisplayFor(model => model.Address.Country)</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Time zone:</b></td>
+                                    <td>@Html.DisplayFor(model => model.Address.TimeZone)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <span class="wtb-ew-v1" style="width: 369px; display:inline-block">
+                            <script src="https://www.worldtimebuddy.com/clock_widget.js?h=683506&bc=8BA1BB&cn=&wt=c2"></script><i><a href="https://www.worldtimebuddy.com/kst-to-est-converter">kst to est</a></i><noscript><a href="https://www.worldtimebuddy.com/kst-to-est-converter">kst to est</a></noscript>
+                            <script>window[wtb_event_widgets.pop()].init()</script>
+                        </span>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        @if (Url.RequestContext.RouteData.Values["id"] is null)
+        {
+
+        }
+        else
+        {
+            if (Model.Check)
+            {
+                using (Html.BeginForm("AddNote", "ClientPortal", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    <div class="col-sm-5 text-right">
+                        <br />
+                        <div class="form-group col">
+                            <label for="actioncode" class="col-sm-6 control-label">Action:</label>
+                            <div class="col-sm-6">
+                                @Html.Hidden("id")
+                                <select id="actioncode" class="form-control" name="actioncode">
+                                    @foreach (var item in Model.Actions)
+                                    {
+                                        <option>@item.Action</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="status" class="col-sm-6 control-label">Status:</label>
+                            <div class="col-sm-6">
+                                <select id="status" class="form-control" name="status">
+                                    @foreach (var item in Model.Statuses)
+                                    {
+                                        <option>@item.Status</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-7 text-left">
+                        <br />
+                        <div class="form-group">
+                            @Html.TextArea("note", null, new { @class = "form-control", @rows = "4" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                }
+
+            }
+        }
+
+        <br />
+    </div>
+</div>
 

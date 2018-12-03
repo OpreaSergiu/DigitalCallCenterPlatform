@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "Inventory";
+}
+
+<h2>Upload Inventory</h2>
+
+<hr />
+<div class="container-fluid text-center">
+    <div class="row content">
+        <div class="col-sm-8 text-left">
+            <br />
+            <p style="font-size:large">
+                <b>EXPECTED FORMAT:</b>
+                <br />
+                <br />
+                File format needs to be <b>csv</b>.
+                <br />
+                <br />
+                Column order does not matter and column headers are case insensitive for all columns.
+                <br />
+                <br />
+                The following columns are <b>required</b>:
+                <br />
+                <code>
+                    cli_ref, client_id, name, desk, prefix_1, phone_no_1, <br />
+                    invoice_no, invoice_amount, invoice_due, invoice_date
+                </code>
+                <br />
+                <br />
+                <b>Optional</b> columns can be added as:
+                <br />
+                <code>
+                    extenstion_1, prefix_2, phone_no_2, extenstion_2, full_name, <br />
+                    contct, address, email, contry, timezone, invoice_due_date
+                </code>
+                <br />
+                <br />
+                <b>Optional</b> columns will default to ' ' for strings and 0.0 for numerics if not included in the file.
+            </p>
+
+            <br />
+
+            @using (Html.BeginForm("Trust", "Backoffice", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <span>Select File:</span>
+                <input class="btn btn-default" type="file" name="postedFile" />
+                <br />
+                <input class="btn btn-primary" type="submit" value="Upload" />
+                <br />
+                <span style="color:green">@ViewBag.FileMessage</span>
+            }
+            <br />
+    </div>
+</div>

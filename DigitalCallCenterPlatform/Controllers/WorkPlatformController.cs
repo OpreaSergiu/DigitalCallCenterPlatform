@@ -23,6 +23,9 @@ namespace DigitalCallCenterPlatform.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            string user_name = User.Identity.GetUserName();
+            var user_desk = db.UserDeskModels.SingleOrDefault(b => b.UserEmail == user_name);
+
             // An empty model that will be use to avoit id errors and diplay blank pages
             var emptyModel = new WorkPlatformAccountViewModels()
             {           
@@ -36,8 +39,7 @@ namespace DigitalCallCenterPlatform.Controllers
 
                 Notes = db.NotesModels.Where(m => m.AccountNumber == -1).OrderByDescending(s => s.SeqNumber),
 
-                //Just for testing
-                Inventory = db.WorkPlatformModels.Where(m => m.Id == 1).OrderBy(d => d.LastWorkDate),
+                Inventory = db.WorkPlatformModels.Where(m => m.Desk == user_desk.Desk).Where(m => m.Status != "CLOSED"),
 
                 Actions = db.ActionsModels.Where(m => m.Id == -1),
 
@@ -60,8 +62,7 @@ namespace DigitalCallCenterPlatform.Controllers
 
                 Notes = db.NotesModels.Where(m => m.AccountNumber == id).OrderByDescending(s => s.SeqNumber),
 
-                //Just for testing
-                Inventory = db.WorkPlatformModels.Where(m => m.Id == 1).OrderBy(d => d.LastWorkDate),
+                Inventory = db.WorkPlatformModels.Where(m => m.Desk == user_desk.Desk).Where(m => m.Status != "CLOSED"),
 
                 Actions = db.ActionsModels.OrderBy(a => a.Action),
 
@@ -75,8 +76,17 @@ namespace DigitalCallCenterPlatform.Controllers
             {
                 model.Check = false;
             }
-
-            // Return the data to the view
+            else
+            {
+                if ((model.Account.Desk == user_desk.Desk) | (User.IsInRole("Admin")))
+                {
+                    return View(model);
+                }
+                else
+                {
+                    return View(emptyModel);
+                }
+            }
             return View(model);
         }
 
@@ -88,13 +98,13 @@ namespace DigitalCallCenterPlatform.Controllers
 
             int maxAge = db.NotesModels.Where(m => m.AccountNumber == id).Max(p => p.SeqNumber);
 
-            //var user_desk = db.UserDeskModels.SingleOrDefault(b => b.UserEmail == user_name);
+            var user_desk = db.UserDeskModels.SingleOrDefault(b => b.UserEmail == user_name);
 
             var result = db.WorkPlatformModels.SingleOrDefault(b => b.Id == id);
             if (result != null)
             {
                 result.LastWorkDate = currentDate;
-                result.Desk = "TST";//user_desk.Desk;
+                result.Desk = user_desk.Desk;
                 result.Status = status;
                 db.SaveChanges();
             }
@@ -107,8 +117,8 @@ namespace DigitalCallCenterPlatform.Controllers
             newNote.Note = note;
             newNote.SeqNumber = maxAge + 1;
             newNote.NoteDate = currentDate;
-            newNote.UserCode = "TST";//user_desk.Desk;
-            newNote.Desk = "TST";//user_desk.Desk;
+            newNote.UserCode = user_desk.Desk;
+            newNote.Desk = user_desk.Desk;
 
             db.NotesModels.Add(newNote);
             db.SaveChanges();

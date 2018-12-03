@@ -312,6 +312,7 @@
     <Content Include="Views\Admin\ChangeClientids.cshtml" />
     <Content Include="Views\Backoffice\Desks.cshtml" />
     <Content Include="Views\Backoffice\ChangeDesks.cshtml" />
+    <Content Include="Views\ClientPortal\Inventory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
