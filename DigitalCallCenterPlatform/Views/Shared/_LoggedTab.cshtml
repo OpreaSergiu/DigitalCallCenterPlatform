@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Context.User.IsInRole("Admin"))
+{
+    <li>@Html.ActionLink("Admin", "Index", "Admin")</li>
+}
+
+@if (Context.User.IsInRole("Backoffice"))
+{
+    <li>@Html.ActionLink("Backoffice", "Index", "Backoffice")</li>
+}
+
+@if (Context.User.IsInRole("Client"))
+{
+    <li>@Html.ActionLink("ClientPortal", "Index", "ClientPortal")</li>
+}
+
+@if (Context.User.IsInRole("Agent"))
+{
+    <li>@Html.ActionLink("WorkPlatform", "Index", "WorkPlatform")</li>
+}

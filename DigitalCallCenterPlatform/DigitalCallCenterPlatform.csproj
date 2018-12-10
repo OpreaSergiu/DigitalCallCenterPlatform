@@ -225,6 +225,7 @@
     <Compile Include="Models\BackofficeDesksViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\InvoiceModels.cs" />
+    <Compile Include="Models\LogsModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\NotesModels.cs" />
     <Compile Include="Models\PaymentsModels.cs" />
@@ -313,6 +314,8 @@
     <Content Include="Views\Backoffice\Desks.cshtml" />
     <Content Include="Views\Backoffice\ChangeDesks.cshtml" />
     <Content Include="Views\ClientPortal\Inventory.cshtml" />
+    <Content Include="Views\Shared\_LoggedTab.cshtml" />
+    <Content Include="Views\Admin\Logs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

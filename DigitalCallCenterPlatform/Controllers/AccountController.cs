@@ -15,6 +15,7 @@ namespace DigitalCallCenterPlatform.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -76,10 +77,32 @@ namespace DigitalCallCenterPlatform.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var user = await UserManager.FindAsync(model.Email, model.Password);
+
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+
+                    var logs = new LogsModels();
+                    var currentDate = DateTime.Now;
+                    logs.Action = "Login.";
+                    logs.UserEmail = model.Email;
+                    logs.Date = currentDate;
+
+                    db.LogsModels.Add(logs);
+                    db.SaveChanges();
+
+                    if (UserManager.IsInRole(user.Id, "Admin"))
+                        return RedirectToLocal("/Admin/Index/");
+                    else if (UserManager.IsInRole(user.Id, "Backoffice"))
+                        return RedirectToLocal("/Backoffice/Index/");
+                    else if (UserManager.IsInRole(user.Id, "Client"))
+                        return RedirectToLocal("/ClientPortal/Index/");
+                    else if (UserManager.IsInRole(user.Id, "Agent"))
+                        return RedirectToLocal("/WorkPlatform/Index/");
+                    else
+                        return RedirectToLocal("/Home/Index/");
+
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

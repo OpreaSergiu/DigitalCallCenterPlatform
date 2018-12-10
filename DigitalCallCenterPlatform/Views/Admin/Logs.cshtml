@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DigitalCallCenterPlatform.Models.LogsModels>
+
+@{
+    ViewBag.Title = "Logs";
+}
+
+<hr />
+@Html.ActionLink("Back To Admin Console", "Index")
+<hr />
+<table class="table table-striped table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Action)
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Action)
+            </td>
+        </tr>
+    }
+
+</table>

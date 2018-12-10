@@ -76,6 +76,16 @@ namespace DigitalCallCenterPlatform.Controllers
         {
             if (ModelState.IsValid)
             {
+                var logs = new LogsModels();
+                string user_name = User.Identity.GetUserName();
+                var currentDate = DateTime.Now;
+                logs.Action = "Add account.";
+                logs.UserEmail = user_name;
+                logs.Date = currentDate;
+
+                db.LogsModels.Add(logs);
+                db.SaveChanges();
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, "Default123!");
                 if (result.Succeeded)
@@ -183,6 +193,16 @@ namespace DigitalCallCenterPlatform.Controllers
         [HttpPost]
         public async Task<ActionResult> ChangeRoleAsync(string id, string role, string type)
         {
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Change Roles list.";
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
             if (type == "Add")
             {
                 if (role == "Agent")
@@ -278,6 +298,16 @@ namespace DigitalCallCenterPlatform.Controllers
             var Username = db.Users.Find(id).Email;
             var clientUserList = db.UserClientidModels.Where(u => u.UserEmail == Username).Where(c => c.ClientId == client);
 
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Change Client ID list.";
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
             if (type == "Add")
             {
                 if (clientUserList.Count() == 0)
@@ -303,6 +333,11 @@ namespace DigitalCallCenterPlatform.Controllers
             }
 
             return RedirectToAction("Clientids");
+        }
+
+        public ActionResult Logs()
+        {
+            return View(db.LogsModels.OrderByDescending(s => s.Id).ToList());
         }
     }
 }

@@ -36,6 +36,16 @@ namespace DigitalCallCenterPlatform.Controllers
 
         public ActionResult PaymentPost(int id)
         {
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Backoffice Operator post payment " + id.ToString();
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
             var PayModel = db.PaymentsModels.Find(id); ;
             var AccModel = db.WorkPlatformModels.Find(PayModel.AccountNumber);
 
@@ -90,6 +100,7 @@ namespace DigitalCallCenterPlatform.Controllers
 
         public ActionResult Desks()
         {
+
             var users = db.Users.ToList();
 
             var model_list = new List<BackofficeDesksModel>
@@ -142,6 +153,16 @@ namespace DigitalCallCenterPlatform.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Backoffice operator change desks.";
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
 
             var models = new BackofficeDesksModel()
             {

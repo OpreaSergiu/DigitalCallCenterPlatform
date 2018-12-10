@@ -23,7 +23,16 @@ namespace DigitalCallCenterPlatform.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            var logs = new LogsModels();
             string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Agent access account " + id.ToString();
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
             var user_desk = db.UserDeskModels.SingleOrDefault(b => b.UserEmail == user_name);
 
             // An empty model that will be use to avoit id errors and diplay blank pages
@@ -93,8 +102,15 @@ namespace DigitalCallCenterPlatform.Controllers
         [HttpPost]
         public ActionResult AddNote(string actioncode, string status, string note, int id)
         {
+            var logs = new LogsModels();
             string user_name = User.Identity.GetUserName();
             var currentDate = DateTime.Now;
+            logs.Action = "Agent post note on account " + id.ToString();
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
 
             int maxAge = db.NotesModels.Where(m => m.AccountNumber == id).Max(p => p.SeqNumber);
 
@@ -129,6 +145,16 @@ namespace DigitalCallCenterPlatform.Controllers
 
         public ActionResult ProcessPaymentRequest(int id)
         {
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Agent post payment request for " + id.ToString();
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
             var result = db.InvoiceModels.SingleOrDefault(b => b.Id == id);
             if (result != null)
             {
@@ -139,7 +165,6 @@ namespace DigitalCallCenterPlatform.Controllers
             var newPayment = new PaymentsModels();
             var InvModel = db.InvoiceModels.Find(id);
             var AccModel = db.WorkPlatformModels.Find(InvModel.AccountNumber);
-            var currentDate = DateTime.Now;
 
             newPayment.AccountNumber = AccModel.Id;
             newPayment.ClientID = AccModel.ClientID;

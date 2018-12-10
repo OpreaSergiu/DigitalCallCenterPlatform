@@ -32,7 +32,16 @@ namespace DigitalCallCenterPlatform.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            var logs = new LogsModels();
             string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Audit Account " + id.ToString();
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
             var user_clients = db.UserClientidModels.Where(b => b.UserEmail == user_name);
 
             List<string> clients = new List<string>();
@@ -114,6 +123,14 @@ namespace DigitalCallCenterPlatform.Controllers
             string user_name = User.Identity.GetUserName();
             var currentDate = DateTime.Now;
 
+            var logs = new LogsModels();
+            logs.Action = "Client add note on account " + id.ToString();
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
             int maxAge = db.NotesModels.Where(m => m.AccountNumber == id).Max(p => p.SeqNumber);
 
             var user_desk = db.UserDeskModels.SingleOrDefault(b => b.UserEmail == user_name);
@@ -147,6 +164,16 @@ namespace DigitalCallCenterPlatform.Controllers
 
         public ActionResult ProcessPaymentRequest(int id)
         {
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Client make payment request on account " + id.ToString();
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
             var result = db.InvoiceModels.SingleOrDefault(b => b.Id == id);
             if (result != null)
             {
@@ -157,7 +184,6 @@ namespace DigitalCallCenterPlatform.Controllers
             var newPayment = new PaymentsModels();
             var InvModel = db.InvoiceModels.Find(id);
             var AccModel = db.WorkPlatformModels.Find(InvModel.AccountNumber);
-            var currentDate = DateTime.Now;
 
             newPayment.AccountNumber = AccModel.Id;
             newPayment.ClientID = AccModel.ClientID;
@@ -186,6 +212,16 @@ namespace DigitalCallCenterPlatform.Controllers
 
         public ActionResult ApprovePayment(int id)
         {
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Client approve payment " + id.ToString();
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
             var result = db.PaymentsModels.SingleOrDefault(b => b.Id == id);
             if (result != null)
             {
@@ -198,6 +234,16 @@ namespace DigitalCallCenterPlatform.Controllers
 
         public ActionResult DeletePayment(int id)
         {
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Client delete payment " + id.ToString();
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
             var result = db.PaymentsModels.SingleOrDefault(b => b.Id == id);
             var invoice = db.InvoiceModels.SingleOrDefault(i => i.Invoice == result.Invoice);
 
