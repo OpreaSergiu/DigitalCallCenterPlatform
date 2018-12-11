@@ -320,6 +320,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\" />
+    <Folder Include="NewBusinessProcessed\" />
+    <Folder Include="NewBusinessScripts\" />
+    <Folder Include="NewBusiness\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

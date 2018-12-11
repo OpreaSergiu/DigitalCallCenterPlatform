@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -260,6 +261,34 @@ namespace DigitalCallCenterPlatform.Controllers
         public ActionResult Inventory()
         { 
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult NewBusiness(HttpPostedFileBase postedFile)
+        {
+            if (postedFile != null)
+            {
+                string path = Server.MapPath("~/NewBusiness/");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
+                ViewBag.FileMessage = "File uploaded successfully. You will be contacted if there are any problems with your file.";
+
+                var logs = new LogsModels();
+                string user_name = User.Identity.GetUserName();
+                var currentDate = DateTime.Now;
+                logs.Action = "Client load inventory file " + postedFile.FileName.ToString();
+                logs.UserEmail = user_name;
+                logs.Date = currentDate;
+
+                db.LogsModels.Add(logs);
+                db.SaveChanges();
+            }
+
+            return View("Inventory");
         }
     }
 }
