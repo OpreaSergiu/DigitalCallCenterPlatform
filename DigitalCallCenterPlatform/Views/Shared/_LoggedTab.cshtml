@@ -16,5 +16,5 @@
 
 @if (Context.User.IsInRole("Agent"))
 {
-    <li>@Html.ActionLink("WorkPlatform", "Index", "WorkPlatform")</li>
+    <li>@Html.ActionLink("WorkPlatform", "/Index/", "WorkPlatform")</li>
 }

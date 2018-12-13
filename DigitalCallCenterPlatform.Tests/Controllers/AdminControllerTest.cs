@@ -6,17 +6,20 @@ using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using DigitalCallCenterPlatform;
 using DigitalCallCenterPlatform.Controllers;
+using DigitalCallCenterPlatform.Models;
 
 namespace DigitalCallCenterPlatform.Tests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class AdminControllerTest
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
         [TestMethod]
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            AdminController controller = new AdminController();
 
             // Act
             ViewResult result = controller.Index() as ViewResult;
@@ -26,26 +29,26 @@ namespace DigitalCallCenterPlatform.Tests.Controllers
         }
 
         [TestMethod]
-        public void About()
+        public void Roles()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            AdminController controller = new AdminController();
 
-            // Act
-            ViewResult result = controller.About() as ViewResult;
+            // Act 
+            ViewResult result = controller.Roles() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
-        public void Contact()
+        public void AddAccount()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            AdminController controller = new AdminController();
 
             // Act
-            ViewResult result = controller.Contact() as ViewResult;
+            ViewResult result = controller.AddAccount() as ViewResult;
 
             // Assert
             Assert.IsNotNull(result);

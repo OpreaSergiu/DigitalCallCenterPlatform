@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
 				connection.commit()
 
-			print(c - 1, totalAmountProcessed)
+			print(len(file_inventory), c, totalAmountProcessed)
 
 			connection.close()
 

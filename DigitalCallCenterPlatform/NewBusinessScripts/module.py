@@ -41,7 +41,7 @@ def parseFile(filename):
     """
     # Return list
     tmp_list = []
-    c = 1
+    c = 0
 
     reqs = [['cli_ref'],['client_id'],['name'],['desk'],
             ['prefix_1'],['phone_no_1'],['extenstion_1'],
