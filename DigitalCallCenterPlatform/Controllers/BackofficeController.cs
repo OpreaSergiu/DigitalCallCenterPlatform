@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -21,7 +22,12 @@ namespace DigitalCallCenterPlatform.Controllers
 
         public ActionResult NewBusiness()
         {
-            return View();
+            var model = new NewBusinessViewModel
+            {
+                Files = Directory.EnumerateFiles("C:\\Users\\Sergiu\\source\\repos\\DigitalCallCenterPlatform\\DigitalCallCenterPlatform\\NewBusiness\\")
+            };
+
+            return View(model);
         }
 
         public ActionResult Trust()

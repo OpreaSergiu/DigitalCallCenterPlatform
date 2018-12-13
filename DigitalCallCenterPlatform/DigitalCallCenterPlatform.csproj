@@ -227,6 +227,7 @@
     <Compile Include="Models\InvoiceModels.cs" />
     <Compile Include="Models\LogsModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\NewBusinessViewModel.cs" />
     <Compile Include="Models\NotesModels.cs" />
     <Compile Include="Models\PaymentsModels.cs" />
     <Compile Include="Models\PhoneModels.cs" />
