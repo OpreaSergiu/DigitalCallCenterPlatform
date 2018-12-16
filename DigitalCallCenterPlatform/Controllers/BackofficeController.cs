@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -212,6 +213,59 @@ namespace DigitalCallCenterPlatform.Controllers
             }
 
             return RedirectToAction("Desks");
+        }
+
+        private string run_cmd(string cmd, string args)
+        {
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = @"C:\Users\Sergiu\AppData\Local\Programs\Python\Python36-32\python.exe";
+            start.CreateNoWindow = true;
+            start.Arguments = string.Format("{0} {1}", cmd, args);
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            using (Process process = Process.Start(start))
+            {
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    string result = reader.ReadToEnd();
+                    //Console.Write(result);
+                    process.WaitForExit();
+                    return result;
+                }
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Trust(HttpPostedFileBase postedFile)
+        {
+            if (postedFile != null)
+            {
+                string path = Server.MapPath("~/TrustFiles/");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
+                postedFile.SaveAs(path + Path.GetFileName(postedFile.FileName));
+                ViewBag.FileMessage = "File uploaded successfully.";
+
+                string fullFilePath = path + Path.GetFileName(postedFile.FileName);
+                string fullScriptPath = Server.MapPath("~/TrustScrips/") + "\\trust.py";
+
+                var textResult = run_cmd(fullScriptPath, fullFilePath);
+
+                string[] results = textResult.Split(null);
+
+                ViewBag.InvoiceCount = results[0];
+                ViewBag.PaymentAmoun = results[1];
+
+                //if (System.IO.File.Exists(path + Path.GetFileName(postedFile.FileName)))
+                //{
+                //    System.IO.File.Delete(path + Path.GetFileName(postedFile.FileName));
+                //}
+            }
+
+            return View("Trust");
         }
     }
 }
