@@ -14,6 +14,7 @@ using System.Collections.Generic;
 
 namespace DigitalCallCenterPlatform.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         // Database Connection

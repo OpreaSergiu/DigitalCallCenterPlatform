@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace DigitalCallCenterPlatform.Controllers
 {
+    [Authorize(Roles = "Backoffice")]
     public class BackofficeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

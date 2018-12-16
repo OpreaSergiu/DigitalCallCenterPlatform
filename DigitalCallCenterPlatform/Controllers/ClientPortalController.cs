@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace DigitalCallCenterPlatform.Controllers
 {
+    [Authorize(Roles = "Client")]
     public class ClientPortalController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

@@ -18,6 +18,7 @@ using System.Configuration;
 
 namespace DigitalCallCenterPlatform.Controllers
 {
+    [Authorize(Roles = "Agent")]
     public class WorkPlatformController : Controller
     {
         // Database Connection
