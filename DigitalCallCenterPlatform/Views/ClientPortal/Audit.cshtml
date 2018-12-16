@@ -163,6 +163,7 @@
                     <li><a data-toggle="tab" href="#notes">History</a></li>
                     <li><a data-toggle="tab" href="#invoices">Invoices</a></li>
                     <li><a data-toggle="tab" href="#accountDetails">Account Details</a></li>
+                    <li><a data-toggle="tab" href="#report">Reports</a></li>
                 </ul>
                 <div class="tab-content" style="width: 55%;">
 
@@ -283,6 +284,18 @@
                         </span>
                     </div>
 
+                    <div id="report" class="tab-pane fade in" style="height: 400px;">
+                        <br />
+                        <br />
+                        @if (Url.RequestContext.RouteData.Values["id"] is null)
+                        {
+
+                        }
+                        else
+                        {
+                            <b>@Html.ActionLink("Generate Notes Report.", "GenerateNotesRerport", new { id = Model.Account.Id })</b>
+                        }
+                    </div>
 
                 </div>
             </div>

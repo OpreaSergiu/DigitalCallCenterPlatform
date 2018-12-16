@@ -23,15 +23,19 @@ namespace DigitalCallCenterPlatform.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var logs = new LogsModels();
             string user_name = User.Identity.GetUserName();
-            var currentDate = DateTime.Now;
-            logs.Action = "Agent access account " + id.ToString();
-            logs.UserEmail = user_name;
-            logs.Date = currentDate;
+            var currentDate = DateTime.Now; ;
 
-            db.LogsModels.Add(logs);
-            db.SaveChanges();
+            if (id != 0)
+            {
+                var logs = new LogsModels();
+                logs.Action = "Agent access account " + id.ToString();
+                logs.UserEmail = user_name;
+                logs.Date = currentDate;
+
+                db.LogsModels.Add(logs);
+                db.SaveChanges();
+            }
 
             var user_desk = db.UserDeskModels.SingleOrDefault(b => b.UserEmail == user_name);
 

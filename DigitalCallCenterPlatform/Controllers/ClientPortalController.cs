@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -33,15 +34,19 @@ namespace DigitalCallCenterPlatform.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var logs = new LogsModels();
             string user_name = User.Identity.GetUserName();
-            var currentDate = DateTime.Now;
-            logs.Action = "Audit Account " + id.ToString();
-            logs.UserEmail = user_name;
-            logs.Date = currentDate;
+            var currentDate = DateTime.Now; ;
 
-            db.LogsModels.Add(logs);
-            db.SaveChanges();
+            if (id != 0)
+            {
+                var logs = new LogsModels();
+                logs.Action = "Audit Account " + id.ToString();
+                logs.UserEmail = user_name;
+                logs.Date = currentDate;
+
+                db.LogsModels.Add(logs);
+                db.SaveChanges();
+            }
 
             var user_clients = db.UserClientidModels.Where(b => b.UserEmail == user_name);
 
@@ -289,6 +294,136 @@ namespace DigitalCallCenterPlatform.Controllers
             }
 
             return View("Inventory");
+        }
+
+        private string run_cmd(string cmd, string args)
+        {
+            ProcessStartInfo start = new ProcessStartInfo();
+            start.FileName = @"C:\Users\Sergiu\AppData\Local\Programs\Python\Python36-32\python.exe";
+            start.CreateNoWindow = true;
+            start.Arguments = string.Format("{0} {1}", cmd, args);
+            start.UseShellExecute = false;
+            start.RedirectStandardOutput = true;
+            using (Process process = Process.Start(start))
+            {
+                using (StreamReader reader = process.StandardOutput)
+                {
+                    string result = reader.ReadToEnd();
+                    //Console.Write(result);
+                    process.WaitForExit();
+                    return result;
+                }
+            }
+        }
+
+        public FileResult GenerateNotesRerport(string id)
+        {
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Client generated Notes report.";
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
+            var filePath = Server.MapPath("~/ReportingFolder/") + "\\Notes_Rerpot.xlsx";
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            string fullScriptPath = Server.MapPath("~/ReportingScripts/") + "\\notesreport.py";
+
+            var textResult = run_cmd(fullScriptPath, id);
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(@filePath);
+            string fileName = "Notes_Rerpot.xlsx";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        public FileResult GenerateInventoryRerport()
+        {
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Client generated Inventory report.";
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
+            var filePath = Server.MapPath("~/ReportingFolder/") + "\\Inventory_Rerpot.xlsx";
+
+            var user_clients = db.UserClientidModels.Where(b => b.UserEmail == user_name);
+
+            string client_id_list = "(";
+
+            foreach (var item in user_clients)
+            {
+                client_id_list += "'" + item.ClientId.ToString() + "',";
+            }
+
+            client_id_list = client_id_list.Remove(client_id_list.Length - 1);
+
+            client_id_list += ")";
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            string fullScriptPath = Server.MapPath("~/ReportingScripts/") + "\\inventoryreport.py";
+
+            var textResult = run_cmd(fullScriptPath, client_id_list);
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(@filePath);
+            string fileName = "Inventory_Rerpot.xlsx";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        public FileResult GenerateRecoveryRerport()
+        {
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Client generated Recovery report.";
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
+            var filePath = Server.MapPath("~/ReportingFolder/") + "\\Recovery_Rerpot.xlsx";
+
+            var user_clients = db.UserClientidModels.Where(b => b.UserEmail == user_name);
+
+            string client_id_list = "(";
+
+            foreach (var item in user_clients)
+            {
+                client_id_list += "'" + item.ClientId.ToString() + "',";
+            }
+
+            client_id_list = client_id_list.Remove(client_id_list.Length - 1);
+
+            client_id_list += ")";
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+
+            string fullScriptPath = Server.MapPath("~/ReportingScripts/") + "\\recoveryreport.py";
+
+            var textResult = run_cmd(fullScriptPath, client_id_list);
+
+            byte[] fileBytes = System.IO.File.ReadAllBytes(@filePath);
+            string fileName = "Recovery_Rerpot.xlsx";
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
     }
 }

@@ -326,6 +326,8 @@
     <Folder Include="NewBusinessProcessed\" />
     <Folder Include="NewBusinessScripts\" />
     <Folder Include="NewBusiness\" />
+    <Folder Include="ReportingFolder\" />
+    <Folder Include="ReportingScripts\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
