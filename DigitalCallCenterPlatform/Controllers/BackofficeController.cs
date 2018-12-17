@@ -268,5 +268,75 @@ namespace DigitalCallCenterPlatform.Controllers
 
             return View("Trust");
         }
+
+        public ActionResult PostNewBusiness(string Name)
+        {
+
+            string path = Server.MapPath("~/NewBusinessFiles/");
+
+            string fullFilePath = path + Path.GetFileName(Name) + " \tN" ;
+            string fullScriptPath = Server.MapPath("~/NewBusinessScripts/") + "\\newbusiness.py";
+
+            var textResult = run_cmd(fullScriptPath, fullFilePath);
+
+            string[] results = textResult.Split(null);
+
+            ViewBag.filename = Name;
+            ViewBag.accounts = results[0];
+            ViewBag.invoices = results[1];
+            ViewBag.balance = results[2];
+
+            var model = new NewBusinessViewModel
+            {
+                Files = Directory.EnumerateFiles("C:\\Users\\Sergiu\\source\\repos\\DigitalCallCenterPlatform\\DigitalCallCenterPlatform\\NewBusiness\\")
+            };
+
+            return View("NewBusiness",model);
+        }
+
+        public ActionResult CommitNewBusinessFile(string Name)
+        {
+
+            if (Name != null)
+            {
+                string path = Server.MapPath("~/NewBusinessFiles/");
+                string destPath = Server.MapPath("~/NewBusinessProcessed/");
+
+                string fullFilePath = path + Path.GetFileName(Name) + " \tY";
+                string fullScriptPath = Server.MapPath("~/NewBusinessScripts/") + "\\newbusiness.py";
+
+                var textResult = run_cmd(fullScriptPath, fullFilePath);
+
+                string[] results = textResult.Split(null);
+
+                ViewBag.filename = Name;
+                ViewBag.accounts = results[0];
+                ViewBag.invoices = results[1];
+                ViewBag.balance = results[2];
+
+                if (System.IO.File.Exists(path + Path.GetFileName(Name)))
+                {
+                    System.IO.File.Move(path + Path.GetFileName(Name), destPath + Path.GetFileName(Name));
+                }
+
+                var model = new NewBusinessViewModel
+                {
+                    Files = Directory.EnumerateFiles("C:\\Users\\Sergiu\\source\\repos\\DigitalCallCenterPlatform\\DigitalCallCenterPlatform\\NewBusiness\\")
+                };
+
+                return View("NewBusiness", model);
+            }
+            else
+            {
+                string redirectUrl = "/Backoffice/NewBusiness";
+                return Redirect(redirectUrl);
+            }
+        }
+
+        public ActionResult IgnoreResults(string Name)
+        {
+            string redirectUrl = "/Backoffice/NewBusiness";
+            return Redirect(redirectUrl);
+        }
     }
 }

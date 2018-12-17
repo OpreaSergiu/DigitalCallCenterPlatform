@@ -42,7 +42,12 @@ if __name__ == '__main__':
 		now = dt.strftime("%Y-%m-%d %H:%M:%S")
 
 		if len(sys.argv) > 1:
-			file = sys.argv[1]
+			args = sys.argv[1]
+
+			arguments = args.split("\t")
+
+			file = arguments[0]
+			flag = arguments[1]
 
 			file_inventory = []
 
@@ -54,7 +59,10 @@ if __name__ == '__main__':
 					#[ClientReference], [ClientID], [Name], [AssignAmount], [TotalReceived], [OtherDue], [TotalDue], [Desk], [Status], [PalacementDate], [LastWorkDate]
 					cursor.execute(sql_insert_account % (elem[0], elem[1], elem[2], 0, 0, 0, 0, elem[3], 'NEW', now, now)) 
 
-					connection.commit()
+					if flag == "Y":
+						connection.commit()
+					else:
+						connection.rollback()
 
 					file_inventory.append(elem[0])
 
@@ -75,7 +83,10 @@ if __name__ == '__main__':
 					#[AccountNumber], [SeqNumber], [UserCode], [ActionCode], [Status], [Desk], [Note], [NoteDate]
 					cursor.execute(sql_insert_note % (acc_number, 1, 'SYS', 'NEW', 'NEW', elem[3], 'System: New account placed!',now)) 
 
-					connection.commit()
+					if flag == "Y":
+						connection.commit()
+					else:
+						connection.rollback()
 
 				cursor.execute(sql_get_account_number % (elem[0], elem[1], elem[2])) 
 
@@ -93,8 +104,11 @@ if __name__ == '__main__':
 
 				cursor.execute(sql_update_account % (new_assign_amount, new_assign_amount, acc_number)) 
 
-				connection.commit()
-
+				if flag == "Y":
+					connection.commit()
+				else:
+					connection.rollback()
+						
 			print(len(file_inventory), c, totalAmountProcessed)
 
 			connection.close()

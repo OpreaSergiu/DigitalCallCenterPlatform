@@ -19,7 +19,7 @@
                 {
                     var fileName = Path.GetFileName(item);
                     <tr>
-                        <td class="filterable-cell" style="word-break: keep-all;">@Html.ActionLink(fileName, "ProcessFile", new { Path = item, Name = fileName })</td>
+                        <td class="filterable-cell" style="word-break: keep-all;">@Html.ActionLink(fileName, "PostNewBusiness", new { Name = fileName })</td>
                     </tr>
                 }
             </tbody>
@@ -46,8 +46,8 @@
                 Total balance: @ViewBag.balance
             </p>
         </div>
-        <button type="button" class="btn">Commit Results</button>
-        <button type="button" class="btn">Ignore Results</button>
+        <button type="button" class="btn">@Html.ActionLink("Commit Results", "CommitNewBusinessFile", new { Name = @ViewBag.filename })</button>
+        <button type="button" class="btn">@Html.ActionLink("Ignore Results", "IgnoreResults", new { Name = @ViewBag.filename })</button>
         <br />
         <br />
     </div>
