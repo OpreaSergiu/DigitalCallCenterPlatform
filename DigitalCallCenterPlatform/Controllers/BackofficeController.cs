@@ -241,6 +241,16 @@ namespace DigitalCallCenterPlatform.Controllers
         {
             if (postedFile != null)
             {
+                var logs = new LogsModels();
+                string user_name = User.Identity.GetUserName();
+                var currentDate = DateTime.Now;
+                logs.Action = "Backoffice operator process trust file: " + postedFile.ToString();
+                logs.UserEmail = user_name;
+                logs.Date = currentDate;
+
+                db.LogsModels.Add(logs);
+                db.SaveChanges();
+
                 string path = Server.MapPath("~/TrustFiles/");
                 if (!Directory.Exists(path))
                 {
@@ -272,6 +282,16 @@ namespace DigitalCallCenterPlatform.Controllers
         public ActionResult PostNewBusiness(string Name)
         {
 
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Backoffice operator process new business file: " + Name.ToString();
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
             string path = Server.MapPath("~/NewBusinessFiles/");
 
             string fullFilePath = path + Path.GetFileName(Name) + " \tN" ;
@@ -299,6 +319,16 @@ namespace DigitalCallCenterPlatform.Controllers
 
             if (Name != null)
             {
+                var logs = new LogsModels();
+                string user_name = User.Identity.GetUserName();
+                var currentDate = DateTime.Now;
+                logs.Action = "Backoffice operator commit new business file: " + Name.ToString();
+                logs.UserEmail = user_name;
+                logs.Date = currentDate;
+
+                db.LogsModels.Add(logs);
+                db.SaveChanges();
+
                 string path = Server.MapPath("~/NewBusinessFiles/");
                 string destPath = Server.MapPath("~/NewBusinessProcessed/");
 

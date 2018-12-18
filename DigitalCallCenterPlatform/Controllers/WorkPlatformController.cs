@@ -196,7 +196,31 @@ namespace DigitalCallCenterPlatform.Controllers
 
             return Redirect(redirectUrl);
         }
+        public ActionResult makeCall(int id, int account_number)
+        {
+            TwilioClient.Init(ConfigurationManager.AppSettings["TwilioAccountSID"], ConfigurationManager.AppSettings["TwilioAuthToken"]);
 
+            var Phones = db.PhoneModels.Find(id);
 
+            var caller_number = Phones.Prefix + Phones.PhoneNumber;
+
+            var logs = new LogsModels();
+            string user_name = User.Identity.GetUserName();
+            var currentDate = DateTime.Now;
+            logs.Action = "Agent call number " + caller_number.ToString();
+            logs.UserEmail = user_name;
+            logs.Date = currentDate;
+
+            db.LogsModels.Add(logs);
+            db.SaveChanges();
+
+            var to = new PhoneNumber(caller_number);
+            var from = new PhoneNumber("+40316305863");
+            var call = CallResource.Create(to, from,
+               url: new Uri("http://demo.twilio.com/docs/voice.xml"));
+
+            string redirectUrl = "/WorkPlatform/Index/" + account_number;
+            return Redirect(redirectUrl);
+        }
     }
 }
